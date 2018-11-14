@@ -17,23 +17,27 @@
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
-                margin: 0;
+                margin: 10px;
             }
 
             .full-height {
                 height: 100vh;
             }
 
-            .flex-center {
+            /* .flex-center {
                 align-items: center;
                 display: flex;
                 justify-content: center;
-            }
+            } */
 
-            .position-ref {
+            /* .position-ref {
                 position: relative;
+            } */
+            .top-left {
+                position: absolute;
+                top: 18px;
+                left: 10px;
             }
-
             .top-right {
                 position: absolute;
                 right: 10px;
@@ -41,11 +45,11 @@
             }
 
             .content {
-                text-align: center;
+                margin-top: 70px;
             }
 
             .title {
-                font-size: 84px;
+                font-size: 44px;
             }
 
             .links > a {
@@ -58,14 +62,26 @@
                 text-transform: uppercase;
             }
 
+            .link-table {
+                width: 100%;
+            }
+
             .m-b-md {
                 margin-bottom: 30px;
+            }
+            @media (max-width: 768px) {
+                
             }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
+                @auth
+                    <div class="top-left links">
+                        <a href="/submit">Submit</a>
+                    </div>    
+                @endauth
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
@@ -80,16 +96,32 @@
             @endif
 
             <div class="content">
+                <hr>
                 <div class="title m-b-md">
-                    Laravel
+                    Daily dose
                 </div>
 
                 <div class="links">
-                    @foreach ($links as $link)
-                        <p>
-                            <a href="{{$link->url}}">{{$link->title}}</a>
-                        </p>
-                    @endforeach
+                    <table class="link-table" >
+                        <tbody>
+                            <tr>
+                                @foreach ($links as $link)
+                                    <td>
+                                        <a href="{{$link->url}}">{{$link->title}}</a>
+                                    </td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                @foreach ($links as $link)
+                                    <td>
+                                        <p>
+                                            {{$link->created_at}}
+                                        </p>
+                                    </td>
+                                @endforeach                                
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
