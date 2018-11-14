@@ -33,24 +33,33 @@
             /* .position-ref {
                 position: relative;
             } */
+            .menu-container {
+                display: flex;
+                justify-content: flex-end;
+            }
             .top-left {
-                position: absolute;
-                top: 18px;
-                left: 10px;
+                justify-content: flex-end;
+                /* position: absolute; */
+                /* top: 18px;
+                left: 10px; */
             }
             .top-right {
-                position: absolute;
+                justify-content: flex-end;
+                /* position: absolute;
                 right: 10px;
-                top: 18px;
+                top: 18px; */
             }
 
             .content {
+                margin: auto;
                 margin-top: 70px;
+                width: 50%;
             }
 
             .title {
                 font-size: 44px;
             }
+
 
             .links > a {
                 color: #636b6f;
@@ -76,27 +85,31 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                @auth
-                    <div class="top-left links">
-                        <a href="/submit">Submit</a>
-                    </div>    
-                @endauth
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
+            
             <div class="content">
+                <div class="menu-container" >
+                    @if (Route::has('login'))
+                        @auth
+                            <div class="top-left links">
+                                <a href="/submit">Submit</a>
+                            </div>    
+                        @endauth
+                        <div class="top-right links">
+                            @auth
+                                <a href="{{ url('/home') }}">Profile</a>
+                            @else
+                                <a href="{{ route('login') }}">Login</a>
+        
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}">Register</a>
+                                @endif
+                            @endauth
+                        </div>
+                </div>
+                @endif
+
                 <hr>
+                <br>
                 <div class="title m-b-md">
                     Daily dose
                 </div>
@@ -105,21 +118,25 @@
                     <table class="link-table" >
                         <tbody>
                             <tr>
-                                @foreach ($links as $link)
+                                <td>
+                                    Title
+                                </td>
+                                <td>
+                                    Date added    
+                                </td>                                
+                            </tr>
+                            @foreach ($links as $link)
+                                <tr>
                                     <td>
                                         <a href="{{$link->url}}">{{$link->title}}</a>
                                     </td>
-                                @endforeach
-                            </tr>
-                            <tr>
-                                @foreach ($links as $link)
                                     <td>
                                         <p>
                                             {{$link->created_at}}
                                         </p>
-                                    </td>
-                                @endforeach                                
-                            </tr>
+                                    </td>                                    
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
